@@ -25,7 +25,9 @@ func (iter *intIterator) next() bool {
 		return false
 	}
 
-	//iter = iter.next
+	iter.value = iter.nextIter.value
+	iter.nextIter = iter.nextIter.nextIter
+
 	return true
 }
 
@@ -37,14 +39,10 @@ func (iter *intIterator) val() int {
 
 // конструктор intIterator
 func newIntIterator(src []int) *intIterator {
-	root := &intIterator{src[0], nil}
+	root := &intIterator{0, nil}
 
 	curStep := root
-
-	for idx, value := range src {
-		if idx == 0 {
-			continue
-		}
+	for _, value := range src {
 		temp := &intIterator{value, nil}
 		curStep.nextIter = temp
 		curStep = temp

@@ -16,11 +16,11 @@ func MainTask1() {
 	iterator := newIntIterator(nums)
 	fmt.Println(iterator)
 	//it := newIntIterator(nums)
-	//weight := func(el element) int {
-	//	return el.(int)
-	//}
-	//m := max(it, weight)
-	//fmt.Println(m)
+	weight := func(el element) int {
+		return el.(int)
+	}
+	m := max(iterator, weight)
+	fmt.Println(m)
 }
 
 //

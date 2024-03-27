@@ -1,9 +1,7 @@
 package main
 
-import (
-	"awesomeProject1/interfaces"
-)
+import "awesomeProject1/errors"
 
 func main() {
-	interfaces.Main()
+	errors.MainError()
 }
