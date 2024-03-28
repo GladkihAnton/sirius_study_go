@@ -11,8 +11,13 @@ func MainMap() {
 	temp["asdasd"] = 1231
 }
 
-func twoSum(nums []int, target int) []int {
-	valueToIndex := make(map[int]int, len(nums)) // TOOD check benchmark
+// without len BenchmarkTwoSum/ArraySize-100000-10    	     231	   5257689 ns/op	 5445658 B/op	    2323 allocs/op
+// with len BenchmarkTwoSum/ArraySize-100000-10    	     362	   3273566 ns/op	 2512759 B/op	      13 allocs/op
+// TODO B/op что это?
+
+func TwoSum(nums []int, target int) []int {
+	valueToIndex := make(map[int]int) // TOOD check benchmark
+	//valueToIndex := make(map[int]int) // TOOD check benchmark
 	for idx, value := range nums {
 		findValue := target - value
 
