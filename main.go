@@ -1,7 +1,7 @@
 package main
 
-import "awesomeProject1/errors"
+import "awesomeProject1/gouroutine"
 
 func main() {
-	errors.MainError()
+	gouroutine.MainGoroutine()
 }
