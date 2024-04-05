@@ -22,34 +22,53 @@ type pair struct {
 // countDigitsInWords считает количество цифр в словах,
 // выбирая очередные слова с помощью next()
 func countDigitsInWords(next nextFunc) counter {
+	pending := make(chan string)
+	go submitWords(next, pending)
+
 	counted := make(chan pair)
-	stats := make(counter)
+	go countWords(pending, counted)
 
-	i := 0
-	go func() {
-		for {
-			word := next()
-			i += 1
-			if word == "" {
-				counted <- pair{}
-				break
-			}
-			counted <- pair{word, countDigits(word)}
+	return fillStats(counted)
+}
 
-		}
+// начало решения
+
+// submitWords отправляет слова на подсчет
+func submitWords(next nextFunc, out chan<- string) {
+	defer func() {
+		close(out)
 	}()
 
 	for {
-		countedPair := <-counted
-		x := pair{}
-		if countedPair == x {
+		word := next()
+		if word == "" {
 			break
 		}
-		stats[countedPair.word] = countedPair.count
+		out <- word
 	}
+}
 
+// countWords считает цифры в словах
+func countWords(in <-chan string, out chan<- pair) {
+	defer func() {
+		close(out)
+	}()
+
+	for word := range in {
+		out <- pair{word, countDigits(word)}
+	}
+}
+
+// fillStats готовит итоговую статистику
+func fillStats(in <-chan pair) counter {
+	stats := make(counter)
+	for pair := range in {
+		stats[pair.word] = pair.count
+	}
 	return stats
 }
+
+// конец решения
 
 // countDigits возвращает количество цифр в строке
 func countDigits(str string) int {
@@ -83,8 +102,8 @@ func wordGenerator(phrase string) nextFunc {
 	}
 }
 
-func mainTask2() {
-	phrase := "0ne 1wo thr33 4068 12312"
+func mainTask3() {
+	phrase := "0ne 1wo thr33 4068"
 	next := wordGenerator(phrase)
 	stats := countDigitsInWords(next)
 	printStats(stats)
