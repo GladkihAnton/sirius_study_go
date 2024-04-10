@@ -102,23 +102,55 @@ func exampleSelect() {
 	}
 }
 
-func MainGoroutine() {
-	//ch := make(chan int, 1)
-	//ch <- 1
-	//fmt.Println(<-ch)
-	//fmt.Println(<-ch)
-	//start := time.Now()
-	//wg := sync.WaitGroup{}
+func channelBuff() {
+	ch := make(chan int, 2)
+	ch <- 1
+	ch <- 2
+	close(ch)
+	x, ok := <-ch
+	fmt.Println(x, ok)
+	for i := range ch {
+		fmt.Println(i)
+	}
 
-	//wg.Wait()
-	//
-	//wg.Add(1)
-	//go temp(&wg, ch, 1)
-	//
-	////wg.Add(1)
-	////go temp(&wg, ch, 2)
-	//
-	//wg.Wait()
-	//fmt.Println(time.Now().Sub(start))
-	exampleSelect()
+	x1, ok1 := <-ch
+	fmt.Println(x1, ok1)
+}
+
+func intGen(cancel chan struct{}, start, stop int) chan int {
+	result := make(chan int)
+
+	go func() {
+		defer func() {
+			close(result)
+		}()
+
+		for i := start; i < stop; i++ {
+			select {
+			case result <- i:
+				time.Sleep(300 * time.Millisecond)
+			case <-cancel:
+				return
+			}
+		}
+	}()
+
+	return result
+}
+
+func intGenLeak() {
+	cancel := make(chan struct{})
+	in := intGen(cancel, 10, 20)
+	for i := range in {
+		if i == 13 {
+			cancel <- struct{}{}
+			break
+		}
+		fmt.Println(i)
+	}
+	fmt.Println("finished")
+}
+
+func MainGoroutine() {
+	queueTask()
 }
