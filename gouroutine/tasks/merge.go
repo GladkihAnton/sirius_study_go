@@ -1,6 +1,7 @@
-package gouroutine
+package tasks
 
 import (
+	"awesomeProject1/gouroutine"
 	"fmt"
 )
 
@@ -29,8 +30,8 @@ func merge(chs ...chan int) chan int {
 
 func runMerge() {
 	cancel := make(chan struct{})
-	ch1 := intGen(cancel, 1, 6)
-	ch2 := intGen(cancel, 4, 7)
+	ch1 := gouroutine.IntGen(cancel, 1, 6)
+	ch2 := gouroutine.IntGen(cancel, 4, 7)
 
 	resultCh := merge(ch1, ch2)
 

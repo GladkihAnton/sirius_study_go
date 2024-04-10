@@ -117,7 +117,7 @@ func channelBuff() {
 	fmt.Println(x1, ok1)
 }
 
-func intGen(cancel chan struct{}, start, stop int) chan int {
+func IntGen(cancel chan struct{}, start, stop int) chan int {
 	result := make(chan int)
 
 	go func() {
@@ -140,7 +140,7 @@ func intGen(cancel chan struct{}, start, stop int) chan int {
 
 func intGenLeak() {
 	cancel := make(chan struct{})
-	in := intGen(cancel, 10, 20)
+	in := IntGen(cancel, 10, 20)
 	for i := range in {
 		if i == 13 {
 			cancel <- struct{}{}
@@ -152,5 +152,4 @@ func intGenLeak() {
 }
 
 func MainGoroutine() {
-	queueTask()
 }

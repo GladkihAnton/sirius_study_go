@@ -1,4 +1,4 @@
-package gouroutine
+package tasks
 
 import (
 	"errors"
