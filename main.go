@@ -1,7 +1,7 @@
 package main
 
-import "awesomeProject1/gouroutine"
+import "awesomeProject1/structs"
 
 func main() {
-	gouroutine.MainGoroutine()
+	structs.MainDeque()
 }
