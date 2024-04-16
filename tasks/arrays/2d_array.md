@@ -19,3 +19,6 @@ Explanation: We can create a 2D array that contains the following rows:
 Input: nums = [1,2,3,4]
 Output: [[4,3,2,1]]
 Пояснение: Все элементы массива различны, поэтому мы можем сохранить их все в первой строке двумерного массива.
+
+T: +
+B: +
