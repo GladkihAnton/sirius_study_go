@@ -48,3 +48,6 @@ func readInput() []int {
 	return nums
 }
 ```
+
+T: +
+B: +

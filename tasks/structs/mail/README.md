@@ -121,3 +121,7 @@ func (service RealService) processMail(mail SendableI) SendableI {
    то логгирует сообщение "Warn: The package is dangerous"
    Если он находит посылку, состоящую из камней (содержит слово "stones"), то логгирует сообщение "Warn: The package was stolen"
 
+
+
+T: - (но какой-то пример юзаджа хочется)
+B: -
